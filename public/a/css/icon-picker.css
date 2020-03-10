@@ -1,0 +1,77 @@
+.selected-icon {
+    font-size: 50px;
+    margin-left: 10px;
+}
+.selected-icon i {
+    margin-left: 10px;
+}
+.popup-body.icon-selector {
+    max-width: 650px;
+}
+.icon-selector .grid-item{
+    width: 25%;
+}
+.icon-selector .grid-item .grid-inner{
+    padding: 5px;
+}
+.icon-selector .grid-item .grid-inner a{
+    display: block;
+}
+.icon-selector .grid-item .grid-inner a:hover {
+    color: #fff;
+    background: #00a9be;
+}
+.icon-selector .popup-content .grid {
+    transition: ease all 250ms;
+}
+.icon-selector a.setfilter {
+    padding: 0 5px;
+}
+.icon-selector .grid-item .grid-inner a {
+    display: block;
+    font-size: 50px;
+    padding: 10px;
+}
+.icon-selector .grid-item {
+    width: 16.66%;
+}
+.icon-selector .popup-content {max-height: calc(100vh - 120px);
+    overflow: auto;
+}
+.icon-selector a.setfilter {
+    padding: 0 5px;
+    font-size: 20px;
+    display: inline-block;
+}
+.icon-selector a.setfilter:hover {
+    text-decoration: underline;
+}
+
+.icon-selector a.setfilter.active {
+    padding-right: 25px;
+    color: #00a9be;
+    position: relative;
+    text-decoration: none;
+}
+.icon-selector a.setfilter.active:after {
+    color: red;
+    content: 'x';
+    font-size: 30px;
+    line-height: 0;
+    top: 8px;
+    right: 5px;
+    position: absolute;
+}
+.icon-selector a.setfilter.active:hover:after {
+    font-weight: 700;
+}
+@media screen and (max-width: 550px) {
+    .icon-selector .grid-item {
+        width: 25%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .icon-selector .grid-item .grid-inner a{
+        font-size: 30px;
+    }
+}

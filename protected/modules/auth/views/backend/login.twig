@@ -1,0 +1,37 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <div id="LOGIN">
+        <div class="left login-left height-equalizer">
+            <div class="welcome-box">
+                <H1>Witaj!</H1>
+            </div>
+        </div>
+        <div class="right login-right height-equalizer">
+            <div class="login-wrap">
+                <a href="/" class="logo"><img src="/a/imgs/logo.png" alt="BlackCat - System zarządzania treścią" /></a>
+                {{ System.getMessages()|raw }}
+                <div class="greetings">
+                    <h5>MaterialCMS!</h5>
+                    <p>Zaloguj się i działaj!</p>
+                </div>
+                {% set form = ActiveForm.begin({ 'id': 'editForm' }) %}
+                    <div class="input">
+                        {{ html.activeLabel(model, 'mail')|raw }}
+                        {{ html.activeTextInput(model, 'mail', {'class' : ((errors.mail) ? 'error' : ' ')})|raw }}
+                        {{ html.error(model, 'mail', {'class': 'field-error', 'tag': 'p'})|raw }}
+                    </div>
+                    <div class="input">
+                        {{ html.activeLabel(model, 'password')|raw }}
+                        {{ html.activePasswordInput(model, 'password', {'class' : ((errors.password) ? 'error' : ' ')})|raw }}
+                        {{ html.error(model, 'password', {'class': 'field-error', 'tag': 'p'})|raw }}
+                    </div>
+                    <div class="clr"></div>
+                    {{ html.submitButton('ZALOGUJ SIĘ', {'class' : 'button material'})|raw }}
+                {% do ActiveForm.end() %}
+            </div>
+            {% include 'footer.twig' %}
+        </div>
+        <div class="clr"></div>
+    </div>
+{% endblock %}

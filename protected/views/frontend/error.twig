@@ -1,0 +1,17 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <div id="HOME" class="site-error">
+        <div id="top-banner">
+            <img src="/imgs/404-bg.jpg" alt="Najlepsi lekarze od USG i Gastroskopii we Wrocławiu." />
+            <div class="clr"></div>
+        </div>
+        <div class="page">
+            <h1>{{ html.encode(name)|raw }}</h1>
+
+            <div class="alert alert-danger">
+                {{ nl2br(html.encode(message))|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

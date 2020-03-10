@@ -1,0 +1,14 @@
+{% set rawPage = true %}
+{% extends 'base.twig' %}
+
+{% block title %}{{ html.encode(name)|raw }}{% endblock %}
+
+{% block content %}
+    <div id="CONTENT">
+        <div id="error-cnt">
+        	<h4>{{ nl2br(html.encode(message))|raw }}</h4>
+            <p>Powrót do strony głównej</p>
+            <a href="{{ System.url('backend/index')|raw }}" class="button material">POWRÓT</a>
+        </div>
+    </div>
+{% endblock %}

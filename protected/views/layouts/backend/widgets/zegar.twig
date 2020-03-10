@@ -1,0 +1,36 @@
+<div class="widget-inner widget-zegar" rel="widget-zegar">
+    {% if widgetsEditMode %}
+        <h2 class="widget-handle">&nbsp;<a href="#" class="delete-widget"><i class="fa fa-times"></i></a></h2>
+    {% endif %}
+    {% set thisClockRandId = rand(1, 1000) %}
+    <div class="content">
+        <div class="clock-contain">
+            <p class="digital-clock"></p>
+
+            <div class="analog-clock">
+                <div class="clock-wrap">
+                    <canvas id="clockid{{ thisClockRandId }}" class="CoolClock:customSkin:50"></canvas>
+                    <span></span>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            new CoolClock({
+                canvasId:       'clockid{{ thisClockRandId }}',
+                skinId:         'customSkin',
+                displayRadius:  '50',
+                showSecondHand: true,
+                gmtOffset:      null,
+                showDigital:    false,
+                logClock:       false,
+                logClockRev:    false
+            });
+
+            startTime();
+        });
+    </script>
+</div>

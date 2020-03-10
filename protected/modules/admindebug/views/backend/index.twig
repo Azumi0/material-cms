@@ -1,0 +1,53 @@
+{% extends 'base.twig' %}
+
+{% block title %}Debug{% endblock %}
+
+{% block content %}
+    <div class="add-article">
+        {{ System.getMessages()|raw }}
+        <div class="input">
+            <label>application.log (ostatnie 200 linijek)</label>
+            <div class="scroller">
+                {{ content|raw }}
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="input">
+            <label>menu.php</label>
+            <div class="scroller">
+                {{ scontent|raw }}
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <br />
+        <h2>Czyszczenie</h2>
+        <div class="button-wrap">
+            <a href="{{ System.url('admindebug/backend/clearlogs')|raw }}" class="button material">Logi aplikacji</a>
+            <a href="{{ System.url('admindebug/backend/cleartwig')|raw }}" class="button material light-blue">Cache twig</a>
+            <a href="{{ System.url('admindebug/backend/clearsystem')|raw }}" class="button material sand">Cache systemu</a>
+            <a href="{{ System.url('admindebug/backend/clearimages')|raw }}" class="button material gray">Wygenerowane obrazki</a>
+            <div class="clr"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlinescript %}
+    <style type="text/css">
+        .scroller{
+            height: 400px;
+            overflow: scroll;
+            width: 100%;
+            border: 1px solid #000000;
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            $('.scroller').each(function () {
+                $(this).scrollTop($(this).prop('scrollHeight'));
+            })
+        });
+    </script>
+{% endblock %}

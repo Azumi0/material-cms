@@ -1,0 +1,37 @@
+<div id="LEFT-SIDEBAR">
+    {% set mainMenu = MenuGenerator.get(currbyperm) %}
+    <div id="desktop-subs">
+        {% for m in mainMenu %}
+            {% if m.items %}
+                <ul class="submenu" data-target="{{ m["linkOptions"].id }}">
+                    {% for sm in m.items %}
+                        <li>
+                            <a href="{{ sm.url }}" class="material gotome {{ sm["linkOptions"].class }}" id="desktop-{{ sm["linkOptions"].id }}">{{ sm.label|raw }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="tse-scrollable wrapper">
+        <div class="tse-content">
+            <div class="mask"></div>
+            <ul id="mainMenu">
+                {% for m in mainMenu %}
+                    <li>
+                        <a class="material{% if not m.items %} gotome{% endif %} {{ m["linkOptions"].class }}" href="{% if m.items %}#{% else %}{{ m.url }}{% endif %}" id="{{ m["linkOptions"].id }}">{{ m.label|raw }}{% if m.items %}<span class="after">{{ m.items|length }}</span>{% endif %}</a>
+                        {% if m.items %}
+                            <ul class="submenu">
+                                {% for sm in m.items %}
+                                    <li>
+                                        <a href="{{ sm.url }}" class="material gotome {{ sm["linkOptions"].class }}" id="{{ sm["linkOptions"].id }}">{{ sm.label|raw }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

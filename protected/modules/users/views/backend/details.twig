@@ -1,0 +1,111 @@
+{% extends 'base.twig' %}
+
+{% block title %}Użytkownicy{% endblock %}
+
+{% block content %}
+    <div class="tse-scrollable wrapper horizontal">
+        <div class="tse-content">
+            <div class="tiles-wrap {{ Convert.number_to_words(1) }}elements">
+                <span class="after">&nbsp;</span>
+                <div id="tiles" class="{{ Convert.number_to_words(1) }}elements">
+                    <a href="{{ System.url('users/backend/index')|raw }}" class="tile">
+                        <i class="fa fa-back"></i>
+                        <h4>Powrót</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-article">
+        {% if data.years_experience %}
+            <div class="input">
+                <p><b>Doświadczenie w branży w latach</b></p>
+                <p>{{ data.years_experience }}</p>
+            </div>
+        {% endif %}
+        {% if data.completed_orders %}
+            <div class="input">
+                <p><b>Przybliżona liczba wykonanych zleceń</b></p>
+                <p>{{ data.completed_orders }}</p>
+            </div>
+        {% endif %}
+        {% if data.finished_order_size %}
+            <div class="input">
+                <p><b>Przybliżona łączna powierzchnia wykonanych zleceń - w hektarach</b></p>
+                <p>{{ data.finished_order_size }}</p>
+            </div>
+        {% endif %}
+        {% if data.area_type %}
+            <div class="input">
+                <p><b>Obszar działania</b></p>
+                <p>{{ area_types[data.area_type] }}</p>
+                {% if data.area_type == 'area_type_zone' and data.type_zone_value %}
+                    <p>{{ data.type_zone_value }} km</p>
+                {% endif %}
+                {% if provinces and data.area_type == 'province' %}
+                    <p>{% for v in provinces %}{{ v }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if data.machines %}
+            <div class="input">
+                <p><b>Posiadane maszyny</b></p>
+                <p>{% for v in data.machines %}{{ v.text }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+            </div>
+        {% endif %}
+        {% if data.machine_park %}
+            <div class="input">
+                <p><b>Chęć rozwoju / rozbudowa parku maszynowego?</b></p>
+                <p>{{ (data.machine_park == 'yes') ? 'tak' : 'nie' }}</p>
+            </div>
+        {% endif %}
+        {% if data.executor_skills %}
+            <br />
+            <h2>Prace które mogę wykonywać</h2>
+            <div class="input">
+                <p><b>Wybrane opcje</b></p>
+                <p>
+                    {% for v in executorSkillsUsers.selected %}{{ v }}{% if not loop.last %}, {% endif %}{% endfor %}
+                </p>
+            </div>
+            {% for k,v in executorSkillsUsers.txt %}
+                {% if v %}
+                    <div class="input">
+                        <p><b>{{ k }}</b></p>
+                        <p>{{ v }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if data.number_creation %}
+            <div class="input">
+                <p><b>Tworzenie pasów ppoż. : powierzchnia w hektarach.</b></p>
+                <p>{{ data.number_creation }}</p>
+            </div>
+        {% endif %}
+        {% if data.number_bushes_removed %}
+            <div class="input">
+                <p><b>Powierzchniowe usuwanie krzaków, samosiewów (mulczowanie) : powierzchnia w hektarach.</b></p>
+                <p>{{ data.number_bushes_removed }}</p>
+            </div>
+        {% endif %}
+        {% if data.number_mineralization %}
+            <div class="input">
+                <p><b>Mineralizacja pasów ppoż. : powierzchnia w hektarach.</b></p>
+                <p>{{ data.number_mineralization }}</p>
+            </div>
+        {% endif %}
+        {% if data.number_branches_removed %}
+            <div class="input">
+                <p><b>Usuwanie korzeni o średniej średnicy ok. 30 cm i regularnym występowaniu na całej powierzchni<br />(rekultywacja lub punktowe frezowanie pni) : powierzchnia w hektarach.</b></p>
+                <p>{{ data.number_branches_removed }}</p>
+            </div>
+        {% endif %}
+        {% if data.number_small_bushes_removed %}
+            <div class="input">
+                <p><b>Usuwanie powierzchniowe krzaków i samosiewów o średniej<br />średnicy pnia ok 10 cm i rekultywacja do 20 cm w głąb (mulczowanie + rekultywacja) :  powierzchnia w hektarach.</b></p>
+                <p>{{ data.number_small_bushes_removed }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

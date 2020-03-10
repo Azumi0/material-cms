@@ -1,0 +1,101 @@
+<div class="widget-inner widget-terminarz widget-terminarz" rel="widget-terminarz">
+    {% set curr = (curr and curr != now|date("Y-m")) ? curr : now|date("Y-m-d") %}
+
+    {% set months = {1: 'styczeń', 2: 'luty', 3: 'marzec', 4: 'kwiecień', 5: 'maj', 6: 'czerwiec', 7: 'lipiec', 8: 'sierpień', 9: 'wrzesień', 10: 'październik', 11: 'listopad', 12: 'grudzień'} %}
+    {% set days_short = {1 : 'Pon.', 2 : 'Wt.', 3 : 'Śr.', 4 : 'Czw.', 5 : 'Pt.', 6 : 'Sob.', 7 : 'Ndz.'} %}
+    {% set cfirst = (curr|date("Y-m-01"))|date("N") %}
+    {% set calstart = curr|date("Y-m-01") %}
+    {% set cmax = curr|date("t") %}
+    {% set cmin = (1 - cfirst) + 1 %}
+    {% set todaysevents = false %}
+    {% if widgetsEditMode %}
+        <h2 class="widget-handle">KALENDARZ <a href="#" class="delete-widget"><i class="fa fa-times"></i></a></h2>
+    {% else %}
+        <h2>KALENDARZ</h2>
+    {% endif %}
+    <div class="calendar-widget">
+        <div class="cal-head">
+            <a class="prevmonth fa" href="#"></a>
+            <p>{{ months[curr|date("n")] }} {{ curr|date("Y") }}</p>
+            <a class="nextmonth fa" href="#"></a>
+        </div>
+        <table class="cal-main-wgd">
+            <thead>
+            <tr>
+                <th>P</th>
+                <th>W</th>
+                <th>Ś</th>
+                <th>C</th>
+                <th>P</th>
+                <th>S</th>
+                <th>N</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in cmin..cmax %}
+                {% if loop.first %}<tr>{% endif %}
+                {% if i < 1 %}<td class="empty_cell">&nbsp;</td>{% endif %}
+                {% if i >= 1 %}
+                    {% set dapp = i - 1 %}
+                    {% set cdate = calstart|date_modify('+' ~ dapp ~ ' day') %}
+                    {% if (curr == (now|date("Y-m-d"))) and (i == (now|date("j"))) and (calendar[cdate|date("Y-m-d")]) %}
+                        {% set todaysevents = calendar[cdate|date("Y-m-d")] %}
+                    {% endif %}
+                    <td class="calshtooltip{% if curr == now|date("Y-m-d") and i == now|date("j") %} today{% endif %}{% if calendar[cdate|date("Y-m-d")] %} active{% endif %}" rel="<p>{{ days_short[cdate|date("N")] }} {{ cdate|date("Y-m-d") }}</p>{% if calendar[cdate|date("Y-m-d")] %}{% for event in calendar[cdate|date("Y-m-d")] %}<div class='details'><div class='left'><span>{% if event.start_date == event.end_date %}{{ event.start_date|date("H:i") }}{% else %}{{ ((event.start_date|date("Y-m-d")) == (cdate|date("Y-m-d"))) ? (event.start_date|date("H:i")) : '--' }}<br/>-<br/>{{ ((event.end_date|date("Y-m-d")) == (cdate|date("Y-m-d"))) ? (event.end_date|date("H:i")) : '--' }}{% endif %}</span></div><div class='right'><span>{{ event.content }}</span></div><div class='clr'></div></div>{% endfor %}{% endif %}">{{ i }}</td>
+                {% endif %}
+                {% if loop.index % 7 == 0 %}</tr><tr>{% endif %}
+                {% if loop.last %}</tr>{% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var cy = {{ curr|date("Y") }};
+            var cm = {{ curr|date("n") }};
+
+            $('a.prevmonth').off('click').on('click', function (e) {
+                e.preventDefault();
+
+                var m = cm - 1;
+                if (m < 1) {
+                    cm = 12;
+                    cy = cy - 1;
+                } else {
+                    cm = checkNulls(m);
+                }
+
+                $.post('{{ System.url('widgets/backend/calendar')|raw }}', 'date=' + cy + '-' + cm, function (data) {
+                    var data = $.parseJSON(data);
+                    if (parseInt(data.success) == 1) {
+                        $('.widget-terminarz').replaceWith(data.html);
+                        equalHeight('#main-widgets-area', '.widget-row');
+                        equalHeight('#CONTENT', '.height-equalizer');
+                    }
+                });
+            });
+
+            $('a.nextmonth').off('click').on('click', function (e) {
+                e.preventDefault();
+
+                var m = cm + 1;
+                if (m > 12) {
+                    cm = 1;
+                    cy = cy + 1;
+                } else {
+                    cm = checkNulls(m);
+                }
+
+                $.post('{{ System.url('widgets/backend/calendar')|raw }}', 'date=' + cy + '-' + cm, function (data) {
+                    var data = $.parseJSON(data);
+                    if (parseInt(data.success) == 1) {
+                        $('.widget-terminarz').replaceWith(data.html);
+                        equalHeight('#main-widgets-area', '.widget-row');
+                        equalHeight('#CONTENT', '.height-equalizer');
+                    }
+                });
+            });
+        });
+    </script>
+</div>

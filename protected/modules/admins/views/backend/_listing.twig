@@ -1,0 +1,37 @@
+{% for r in listing %}
+    <tr class="{% if loop.index % 2 == 0 %}even {% endif %}materialtable-row">
+        <td class="textC"><h5 class="name">{{ (loop.index + offset) }}</h5></td>
+        <td>{{ r.realname }}</td>
+        <td>{{ r.mail }}</td>
+        <td class="textC"><a href="{{ System.url('admins/backend/block', { 'id': r.id })|raw }}" class="activate"><i class="{% if r.active %}icomoon icon-close{% else %}fa fa-check{% endif %}"></i></a></td>
+        <td class="textC options">
+            <a href="#" class="options-trigger icomoon icon-options"></a>
+            <div class="more-options">
+                <table>
+                    <tr>
+                        <td>
+                            <a href="{{ System.url('admins/backend/edit', { 'id': r.id })|raw }}" class="edit button material"><i class="icomoon icon-pencil"></i></a>
+                            <a href="{{ System.url('admins/backend/delete', { 'id': r.id })|raw }}" onclick="return confirm('Czy na pewno usunąć?');" class="delete button material"><i class="icomoon icon-bin"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="display: none;" class="materialtable-row-ext">
+        <td colspan="5">
+            <div class="bottom-content">
+                <div class="title">Adres e-mail:</div>
+                <div class="info">{{ r.mail }}</div>
+                <div class="clr"></div>
+                <div class="title">Zablokowany:</div>
+                <div class="info"><a href="{{ System.url('admins/backend/block', { 'id': r.id })|raw }}" class="activate"><i class="{% if r.active %}icomoon icon-close{% else %}fa fa-check{% endif %}"></i></a></div>
+                <div class="clr"></div>
+                <div class="title full">Opcje:</div>
+                <a href="{{ System.url('admins/backend/edit', { 'id': r.id })|raw }}" class="edit button material"><i class="icomoon icon-pencil"></i></a>
+                <a href="{{ System.url('admins/backend/delete', { 'id': r.id })|raw }}" onclick="return confirm('Czy na pewno usunąć?');" class="delete button material"><i class="icomoon icon-bin"></i></a>
+                <div class="clr"></div>
+            </div>
+        </td>
+    </tr>
+{% endfor %}

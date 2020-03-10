@@ -1,0 +1,87 @@
+{% extends 'base.twig' %}
+
+{% block title %}PANEL GŁÓWNY{% endblock %}
+
+{% block content %}
+    {% if uwidgets %}
+        <div id="main-widgets-area" class="widgets-content three-rows">
+            <div id="widgetsGroupOne" class="widget-row">
+                {% for w in uwidgets.widgetsGroupOne %}
+                    {% include 'widgets/' ~ (w|replace({ 'widget-': '' })) ~ '.twig' %}
+                {% endfor %}
+            </div>
+            <div id="widgetsGroupTwo" class="widget-row">
+                {% for w in uwidgets.widgetsGroupTwo %}
+                    {% include 'widgets/' ~ (w|replace({ 'widget-': '' })) ~ '.twig' %}
+                {% endfor %}
+            </div>
+            <div id="widgetsGroupThree" class="widget-row">
+                {% for w in uwidgets.widgetsGroupThree %}
+                    {% include 'widgets/' ~ (w|replace({ 'widget-': '' })) ~ '.twig' %}
+                {% endfor %}
+            </div>
+            <div class="clr"></div>
+        </div>
+    {% else %}
+        <div id="main-widgets-area" class="widgets-content three-rows">
+            <div id="widgetsGroupOne" class="widget-row">
+                {% include 'widgets/notes.twig' %}
+                {% include 'widgets/zadania.twig' %}
+                {% include 'widgets/zegar.twig' %}
+            </div>
+            <div id="widgetsGroupTwo" class="widget-row">
+                {% include 'widgets/terminarz.twig' %}
+                {% include 'widgets/kalkulator.twig' %}
+            </div>
+            <div id="widgetsGroupThree" class="widget-row">
+                {% include 'widgets/pogoda.twig' %}
+            </div>
+            <div class="clr"></div>
+        </div>
+    {% endif %}
+    {% if uwidgets_tablet %}
+        <div id="main-widgets-area2" class="widgets-content two-rows">
+            <div id="widgetsGroupOneTablet" class="widget-row">
+                {% for w in uwidgets_tablet.widgetsGroupOneTablet %}
+                    {% include 'widgets/' ~ (w|replace({ 'widget-': '' })) ~ '.twig' %}
+                {% endfor %}
+            </div>
+            <div id="widgetsGroupTwoTablet" class="widget-row">
+                {% for w in uwidgets_tablet.widgetsGroupTwoTablet %}
+                    {% include 'widgets/' ~ (w|replace({ 'widget-': '' })) ~ '.twig' %}
+                {% endfor %}
+            </div>
+            <div class="clr"></div>
+        </div>
+    {% else %}
+        <div id="main-widgets-area2" class="widgets-content two-rows">
+            <div id="widgetsGroupOneTablet" class="widget-row">
+                {% include 'widgets/notes.twig' %}
+                {% include 'widgets/zadania.twig' %}
+                {% include 'widgets/terminarz.twig' %}
+            </div>
+            <div id="widgetsGroupTwoTablet" class="widget-row">
+                {% include 'widgets/kalkulator.twig' %}
+                {% include 'widgets/pogoda.twig' %}
+                {% include 'widgets/zegar.twig' %}
+            </div>
+            <div class="clr"></div>
+        </div>
+    {% endif %}
+    <div id="main-widgets-area3" class="widgets-content one-row">
+        <div id="widgetsGroupOneMobile" class="widget-row">
+            {% if uwidgets_mobile %}
+                {% for w in uwidgets_mobile %}
+                    {% include 'widgets/' ~ (w|replace({ 'widget-': '' })) ~ '.twig' %}
+                {% endfor %}
+            {% else %}
+                {% include 'widgets/notes.twig' %}
+                {% include 'widgets/zadania.twig' %}
+                {% include 'widgets/terminarz.twig' %}
+                {% include 'widgets/kalkulator.twig' %}
+                {% include 'widgets/pogoda.twig' %}
+                {% include 'widgets/zegar.twig' %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

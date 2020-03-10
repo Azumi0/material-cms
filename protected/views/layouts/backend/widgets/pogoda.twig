@@ -1,0 +1,48 @@
+<div class="widget-inner weather widget-pogoda" rel="widget-pogoda">
+    {% if widgetsEditMode %}
+        <h2 class="widget-handle">POGODA <a href="#" class="delete-widget"><i class="fa fa-times"></i></a></h2>
+    {% else %}
+        <h2>POGODA</h2>
+    {% endif %}
+    <div class="select">
+        <div class="select-cnt">
+            <div class="select-cnt-inner">
+                {% set setweather = System.getWeatherWidget() %}
+                <select name="weather_city">
+                    <option value="53.1324886,23.1688403"{% if setweather == '53.1324886,23.1688403' %} selected="selected"{% endif %}>Białystok</option>
+                    <option value="53.1234804,18.0084378"{% if setweather == '53.1234804,18.0084378' %} selected="selected"{% endif %}>Bydgoszcz</option>
+                    <option value="54.3520252,18.6466384"{% if setweather == '54.3520252,18.6466384' %} selected="selected"{% endif %}>Gdańsk</option>
+                    <option value="52.7325285,15.2369305"{% if setweather == '52.7325285,15.2369305' %} selected="selected"{% endif %}>Gorzów Wielkopolski</option>
+                    <option value="50.2648919,19.0237815"{% if setweather == '50.2648919,19.0237815' %} selected="selected"{% endif %}>Katowice</option>
+                    <option value="50.8660773,20.6285677"{% if setweather == '50.8660773,20.6285677' %} selected="selected"{% endif %}>Kielce</option>
+                    <option value="50.0646501,19.9449799"{% if setweather == '50.0646501,19.9449799' %} selected="selected"{% endif %}>Kraków</option>
+                    <option value="51.2464536,22.5684463"{% if setweather == '51.2464536,22.5684463' %} selected="selected"{% endif %}>Lublin</option>
+                    <option value="51.7592485,19.4559833"{% if setweather == '51.7592485,19.4559833' %} selected="selected"{% endif %}>Łódź</option>
+                    <option value="53.778422,20.4801193"{% if setweather == '53.778422,20.4801193' %} selected="selected"{% endif %}>Olsztyn</option>
+                    <option value="50.6751067,17.9212976"{% if setweather == '50.6751067,17.9212976' %} selected="selected"{% endif %}>Opole</option>
+                    <option value="52.406374,16.9251681"{% if setweather == '52.406374,16.9251681' %} selected="selected"{% endif %}>Poznań</option>
+                    <option value="50.0411867,21.9991196"{% if setweather == '50.0411867,21.9991196' %} selected="selected"{% endif %}>Rzeszów</option>
+                    <option value="53.4285438,14.5528116"{% if setweather == '53.4285438,14.5528116' %} selected="selected"{% endif %}>Szczecin</option>
+                    <option value="53.0137902,18.5984437"{% if setweather == '53.0137902,18.5984437' %} selected="selected"{% endif %}>Toruń</option>
+                    <option value="52.2296756,21.0122287"{% if setweather == '52.2296756,21.0122287' %} selected="selected"{% endif %}>Warszawa</option>
+                    <option value="51.1078852,17.0385376"{% if setweather == '51.1078852,17.0385376' %} selected="selected"{% endif %}>Wrocław</option>
+                    <option value="51.9356214,15.5061862"{% if setweather == '51.9356214,15.5061862' %} selected="selected"{% endif %}>Zielona Góra</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="general-weather" style="text-align: center;">
+
+        <div class="general-weather-insider">
+            <div class="general-weather-lbl">
+                <p class="general-weather-date"></p>
+                <p class="general-weather-today"></p>
+            </div>
+            <div class="general-weather-rbl"></div>
+            <div class="clr"></div>
+        </div>
+    </div>
+    <div class="weather-cnt">
+        <ul></ul>
+    </div>
+</div>

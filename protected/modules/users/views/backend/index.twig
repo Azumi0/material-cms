@@ -1,0 +1,127 @@
+{% extends 'base.twig' %}
+
+{% block title %}Użytkownicy{% endblock %}
+
+{% block content %}
+    <div class="tse-scrollable wrapper horizontal">
+        <div class="tse-content" id="tiles-movable-content">
+            <div class="tiles-wrap {{ Convert.number_to_words(1) }}elements">
+                <span class="after">&nbsp;</span>
+                <div id="tiles">
+                    <a href="{{ System.url('users/backend/add')|raw }}" class="tile">
+                        <i class="fa fa-plus"></i>
+                        <h4>Dodaj użytkownika</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tile-arrows-wrap">
+        <div class="responsive-tile-arrows {{ Convert.number_to_words(1) }}elements">
+            <a href="#" id="tilesMoveLeft" class="fa fa-long-arrow-left"></a>
+            <a href="#" id="tilesMoveRight" class="fa fa-long-arrow-right"></a>
+        </div>
+    </div>
+    <a href="#" class="search-trigger{% if usersadvsearch %} active{% endif %}" id="search-trigger">
+        <h2>Wyszukiwanie zaawansowane</h2>
+    </a>
+    <div id="search-cnt"{% if usersadvsearch %} class="active"{% endif %}>
+        <form method="post" action="{{ System.url('users/backend/index')|raw }}" id="adv-search-form"
+              enctype="multipart/form-data" style="padding-bottom: 90px;">
+            <input type="hidden" name="_csrf" value="{{ System.getCsrfToken() }}"/>
+            <div class="input-wrap">
+                <div class="input select" style="width: 100%;">
+                    <label for="Usersadvsearch-role">Rola użytkownika:</label>
+                    <select id="Usersadvsearch-role" class="fancy-sel" name="Usersadvsearch[role]">
+                        <option value="">Wybierz grupę uprawnień użytkownika</option>
+                        {% for key,val in roleMapping %}
+                            <option value="{{ key }}"{% if usersadvsearch.role == key %} selected{% endif %}>{{ val }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="clr"></div>
+                <button class="button" type="submit">Wyszukaj</button>
+                <div class="clr"></div>
+            </div>
+        </form>
+    </div>
+    <div class="listing">
+        {{ System.getMessages()|raw }}
+        <div class="materialtable-sh-wrap">
+            <div class="sh-filter-wrap">
+                <div class="input search-input">
+                    <a class="clear-filters"{% if usersadvsearch %} style="display: inline-block;"{% endif %}
+                       data-clearstate="true" data-reloadstate="false" data-inpid="main-listing-search"
+                       href="{{ System.url('users/backend/index')|raw }}?reset=true">wyczyść filtry</a>
+                    <input id="main-listing-search" class="listing-filters" type="text" value="" />
+                </div>
+            </div>
+            <div class="show-numbers">
+                <span>Pokazywane </span>
+                <div class="select">
+                    <div class="select-cnt">
+                        <div class="select-cnt-inner">
+                            <select name="listing-limit" class="fancy-sel-noblank" id="main-listing-limit">
+                                <option value="5">5</option>
+                                <option value="10" selected="selected">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <span> wyników</span>
+            </div>
+            <table id="main-listing" class="materialtable">
+                <thead>
+                    <tr>
+                        <th data-sort="false">LP</th>
+                        <th data-sort="name" class="textL">Imię</th>
+                        <th data-sort="surname" class="textL">Nazwisko</th>
+                        <th data-sort="mail" data-hide="700">E-mail</th>
+                        <th data-sort="company_address" data-hide="600">Województwo</th>
+                        <th data-sort="company_city" data-hide="600">Miasto</th>
+                        <th data-sort="false" data-hide="500">Rola</th>
+                        <th data-sort="false" data-hide="800">Aktywny</th>
+                        <th data-sort="false" data-hide="900">Opcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr style="display: none;" class="materialtable-no-records">
+                    <td colspan="5">Brak wyników do wyświetlenia</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="main-listing-counting" class="listing-number-provider">
+                <p>Pokazywane <span>od <span class="number count_from">5</span></span> <span>do <span class="number count_to">10</span></span> z <span class="number count_all">57</span> wyników</p>
+            </div>
+            <div id="main-listing-pagination" class="listing-pagination">
+                <ul>
+                    <li class="materialtable-page-arrow materialtable-page-first"><a data-page="first" href="#first">«</a></li>
+                    <li class="materialtable-page-arrow materialtable-page-prev"><a data-page="prev" href="#prev">‹</a></li>
+                    <li class="materialtable-page-arrow materialtable-limit-prev" style="display: none;"><a data-page="limit-prev" href="#limit-prev">...</a></li>
+                    <li class="materialtable-page-arrow materialtable-limit-next"><a data-page="limit-next" href="#limit-next">...</a></li>
+                    <li class="materialtable-page-arrow materialtable-page-next"><a data-page="next" href="#next">›</a></li>
+                    <li class="materialtable-page-arrow materialtable-page-last"><a data-page="last" href="#last">»</a></li>
+                </ul>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headscript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#main-listing').materialtable2({
+                href: '{{ System.url('users/backend/index')|raw }}',
+                order: ['name', 'asc']
+            });
+
+            $("#adv-search-form").on('submit', function () {
+                $('#main-listing').data('materialtable2').clearState(false);
+            });
+        });
+    </script>
+{% endblock %}

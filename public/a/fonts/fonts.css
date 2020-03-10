@@ -1,0 +1,169 @@
+@font-face {
+    font-family: 'lato';
+    src: url('lato-bold-webfont.eot');
+    src: url('lato-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-bold-webfont.woff') format('woff'),
+         url('lato-bold-webfont.ttf') format('truetype'),
+         url('lato-bold-webfont.svg#latobold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-semibold-webfont.eot');
+    src: url('lato-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-semibold-webfont.woff') format('woff'),
+         url('lato-semibold-webfont.ttf') format('truetype'),
+         url('lato-semibold-webfont.svg#latosemibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-light-webfont.eot');
+    src: url('lato-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-light-webfont.woff') format('woff'),
+         url('lato-light-webfont.ttf') format('truetype'),
+         url('lato-light-webfont.svg#latolight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-regular-webfont.eot');
+    src: url('lato-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-regular-webfont.woff') format('woff'),
+         url('lato-regular-webfont.ttf') format('truetype'),
+         url('lato-regular-webfont.svg#latoregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-bolditalic-webfont.eot');
+    src: url('lato-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-bolditalic-webfont.woff') format('woff'),
+         url('lato-bolditalic-webfont.ttf') format('truetype'),
+         url('lato-bolditalic-webfont.svg#latobolditalic') format('svg');
+    font-weight: 700;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-semibolditalic-webfont.eot');
+    src: url('lato-semibolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-semibolditalic-webfont.woff') format('woff'),
+         url('lato-semibolditalic-webfont.ttf') format('truetype'),
+         url('lato-semibolditalic-webfont.svg#latosemibolditalic') format('svg');
+    font-weight: 600;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-lightitalic-webfont.eot');
+    src: url('lato-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-lightitalic-webfont.woff') format('woff'),
+         url('lato-lightitalic-webfont.ttf') format('truetype'),
+         url('lato-lightitalic-webfont.svg#latolightitalic') format('svg');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'lato';
+    src: url('lato-regularitalic-webfont.eot');
+    src: url('lato-regularitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lato-regularitalic-webfont.woff') format('woff'),
+         url('lato-regularitalic-webfont.ttf') format('truetype'),
+         url('lato-regularitalic-webfont.svg#latoregularitalic') format('svg');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('fontawesome-webfont.eot');
+  src: url('fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('fontawesome-webfont.woff') format('woff'), url('fontawesome-webfont.ttf') format('truetype'), url('fontawesome-webfont.svg#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+    font-family: 'biryani';
+    src: url('biryani-bold-webfont.eot');
+    src: url('biryani-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-bold-webfont.woff') format('woff'),
+         url('biryani-bold-webfont.ttf') format('truetype'),
+         url('biryani-bold-webfont.svg#biryanibold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}@font-face {
+    font-family: 'biryani';
+    src: url('biryani-demibold-webfont.eot');
+    src: url('biryani-demibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-demibold-webfont.woff') format('woff'),
+         url('biryani-demibold-webfont.ttf') format('truetype'),
+         url('biryani-demibold-webfont.svg#biryanidemibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+
+}@font-face {
+    font-family: 'biryani';
+    src: url('biryani-extrabold-webfont.eot');
+    src: url('biryani-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-extrabold-webfont.woff') format('woff'),
+         url('biryani-extrabold-webfont.ttf') format('truetype'),
+         url('biryani-extrabold-webfont.svg#biryaniextrabold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+
+}@font-face {
+    font-family: 'biryani';
+    src: url('biryani-heavy-webfont.eot');
+    src: url('biryani-heavy-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-heavy-webfont.woff') format('woff'),
+         url('biryani-heavy-webfont.ttf') format('truetype'),
+         url('biryani-heavy-webfont.svg#biryaniheavy') format('svg');
+    font-weight: 900;
+    font-style: normal;
+
+}@font-face {
+    font-family: 'biryani';
+    src: url('biryani-light-webfont.eot');
+    src: url('biryani-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-light-webfont.woff') format('woff'),
+         url('biryani-light-webfont.ttf') format('truetype'),
+         url('biryani-light-webfont.svg#biryanilight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+
+}@font-face {
+    font-family: 'biryani';
+    src: url('biryani-regular-webfont.eot');
+    src: url('biryani-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-regular-webfont.woff') format('woff'),
+         url('biryani-regular-webfont.ttf') format('truetype'),
+         url('biryani-regular-webfont.svg#biryaniregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}@font-face {
+    font-family: 'biryani';
+    src: url('biryani-ultralight-webfont.eot');
+    src: url('biryani-ultralight-webfont.eot?#iefix') format('embedded-opentype'),
+         url('biryani-ultralight-webfont.woff') format('woff'),
+         url('biryani-ultralight-webfont.ttf') format('truetype'),
+         url('biryani-ultralight-webfont.svg#biryaniultralight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'icomoon';
+    src: url('icomoon.eot');
+    src: url('icomoon.eot?#iefix') format('embedded-opentype'),
+         url('icomoon.woff') format('woff'),
+         url('icomoon.ttf') format('truetype'),
+         url('icomoon.svg#icomoon') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}

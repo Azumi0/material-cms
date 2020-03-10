@@ -1,0 +1,10 @@
+<div class="bread-crumbs">
+    {% for page in data %}
+        {% if loop.last %}
+            <span>{{ page.label }}</span>
+        {% else %}
+            <a href="{{ page.url }}">{{ page.label }}</a>
+            /
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,16 @@
+<div id="RIGHT-SETTINGS">
+    <div class="profile">
+        <img src="{{ userData.photo }}" alt="" />
+        <h5>{{ userData.name }}</h5>
+    </div>
+    <ul>
+        {% set myAdmId = System.userId() %}
+        <li><a class="material" href="{{ System.url('admins/backend/edit', { 'id': myAdmId })|raw }}"><i class="fa fa-profile"></i> PROFIL</a></li>
+        {#<li><a class="material" href="#"><i class="fa fa-messages"></i> WIADOMOŚCI</a></li>
+        <li><a class="material" href="#"><i class="fa fa-settings"></i> USTAWIENIA</a></li>#}
+        {% if Stat.getPerms('admins|backend|index') %}
+            <li><a class="material" href="{{ System.url('admins/backend/index')|raw }}"><i class="fa fa-users"></i> ADMINISTRATORZY</a></li>
+        {% endif %}
+        <li><a class="material" href="{{ System.url('auth/backend/logout')|raw }}"><i class="fa fa-logout"></i> WYLOGUJ SIĘ</a></li>
+    </ul>
+</div>

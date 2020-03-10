@@ -1,0 +1,77 @@
+{% extends 'base.twig' %}
+
+{% block title %}Uprawnienia{% endblock %}
+
+{% block content %}
+    {% set acldebug = false %}
+    <div class="tse-scrollable wrapper horizontal">
+        <div class="tse-content">
+            <div class="tiles-wrap {{ Convert.number_to_words(1) }}elements">
+                <span class="after">&nbsp;</span>
+                <div id="tiles" class="{{ Convert.number_to_words(1) }}elements">
+                    <a href="{{ System.url('acl/backend/index')|raw }}" class="tile">
+                        <i class="fa fa-back"></i>
+                        <h4>Powrót</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-article">
+        {{ System.getMessages()|raw }}
+        {% set form = ActiveForm.begin({ 'id': 'editForm', 'options': {'enctype' : 'multipart/form-data'} }) %}
+            <div class="input">
+                {{ html.activeLabel(model, 'description')|raw }}
+                {{ html.activeTextInput(model, 'description', {'class' : ((errors.description) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'description', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="section">
+                <a href="#" id="selectAll">zaznacz wszystkie</a> | <a href="#" id="deselectAll">odznacz wszystkie</a>
+                {% for description, p in perms %}
+                    <div class="section-row">
+                        <label>
+                            {{ description }}:<br />
+                            <a href="#" class="selectGroup">zaznacz grupę</a> | <a href="#" class="deselectGroup">odznacz grupę</a>
+                        </label>
+                        <div class="group">
+                            {% set x = loop.index %}
+                            {% for n, o in p %}
+                                <div class="single-check cb"><input type="checkbox" name="perms[]" id="check{{ x ~ loop.index }}" value="{{ o }}"{% if o in aperms %}checked="checked"{% endif %} /><label for="check{{ x ~ loop.index }}">{{ n }}{% if acldebug %} -- {{ o }}{% endif %}</label></div>
+                            {% endfor %}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="button-wrap">
+                {{ html.submitButton('Zapisz', {'class' : 'button material'})|raw }}
+                <div class="clr"></div>
+            </div>
+        {% do ActiveForm.end() %}
+    </div>
+{% endblock %}
+
+{% block inlinescript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#selectAll').click(function(e) {
+                $(this).parent().find('input:checkbox').prop("checked", true);
+                e.preventDefault();
+            });
+
+            $('#deselectAll').click(function(e) {
+                $(this).parent().find('input:checkbox').prop("checked", false);
+                e.preventDefault();
+            });
+            $('.selectGroup').click(function(e) {
+                $(this).parent().parent().find('input:checkbox').prop("checked", true);
+                e.preventDefault();
+            });
+
+            $('.deselectGroup').click(function(e) {
+                $(this).parent().parent().find('input:checkbox').prop("checked", false);
+                e.preventDefault();
+            });
+        });
+    </script>
+{% endblock %}

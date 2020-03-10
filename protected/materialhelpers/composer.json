@@ -1,0 +1,8 @@
+{
+  "name": "materialhelpers",
+  "autoload": {
+    "psr-4": {
+      "materialhelpers\\": "lib/"
+    }
+  }
+}

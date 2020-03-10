@@ -1,0 +1,179 @@
+<script type="text/javascript">
+    var isPhotoLoaded = false;
+    function photoLoaded()
+    {
+        isPhotoLoaded = true;
+    }
+</script>
+<div class="popup-wrapper">
+    <div class="popup-body cropper-wrap">
+        <div class="popup-head">
+            <div class="options-wrap">
+                <div class="options" id="cropperOpts">
+                    <a href="#" id="cropperZoomIn" class="disabled"><i class="fa fa-search-plus"></i></a>
+                    <a href="#" id="cropperZoomOut" class="disabled"><i class="fa fa-search-minus"></i></a>
+                    <a href="#" id="cropperRotateLeft" class="disabled"><i class="fa fa-rotate-left"></i></a>
+                    <a href="#" id="cropperRotateRight" class="disabled"><i class="fa fa-rotate-right"></i></a>
+                    {#<a href="#" id="cropperMove" class="disabled"><i class="fa fa-arrows"></i></a>
+                    <a href="#" id="cropperCrop" class="disabled"><i class="fa fa-crop"></i></a>#}
+                    <div class="clr"></div>
+                </div>
+                <div class="save">
+                    <a href="#" id="saveCrop" class="button material">Zapisz</a>
+                    <a href="#" class="cancel"><i class="icomoon icon-close"></i></a>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <form id="fileSaveForm">
+            <input id="fileName" name="photo[name]" type="hidden" value="{{ current.name }}" />
+            <input id="fileCode" name="photo[code]" type="hidden" value="{{ current.code }}" />
+            <input id="fileX" name="photo[x]" type="hidden" value="{{ current.x }}" />
+            <input id="fileY" name="photo[y]" type="hidden" value="{{ current.y }}" />
+            <input id="fileWidth" name="photo[width]" type="hidden" value="{{ current.width }}" />
+            <input id="fileHeight" name="photo[height]" type="hidden" value="{{ current.height }}" />
+            <input id="fileRotate" name="photo[rotate]" type="hidden" value="{{ current.rotate }}" />
+        </form>
+        <div class="popup-content">
+            <div class="loader" id="cropperLoader" style="display: block">
+                <div class="progress-container">
+                    <div class="dot first"></div>
+                    <div class="dot second"></div>
+                    <div class="dot third"></div>
+                    <div class="dot fourth"></div>
+                    <div class="dot fifth"></div>
+                    <div class="dot sixth"></div>
+                </div>
+                <div class="error form"><h4><i class="fa fa-error"></i> Błąd</h4> <p>Wystąpił błąd podczas wysyłania pliku. Proszę sprawdzić czy nie przerwane zostało połączenie sieciowe.</p></div>
+            </div>
+            <div class="cropper-wrapper" id="cropWrap" style="display: block">
+                <div id="cropper">
+                    <img onload="photoLoaded();" src="{{ System.url('photos/backend/display') }}?file={{ urle(current.name) }}" rel="" alt="" id="uplImage" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# scripts below #}
+<script type="text/javascript" src="/a/js/cropper.js"></script>
+<script type="text/javascript">
+    var dimH = '{{ dimensions.h|raw }}';
+    var dimW = '{{ dimensions.w|raw }}';
+    var aspectH = '{{ aspect.h|raw }}';
+    var aspectW = '{{ aspect.w|raw }}';
+
+    var $image;
+    var cropperInterval;
+
+    function cropperCodeStart(){
+        $("#cropperOpts a").removeClass('disabled');
+        $("#cropperLoader").hide();
+        $image.cropper({
+            aspectRatio: aspectW / aspectH,
+            dragCrop: false,
+            doubleClickToggle: false,
+            strict: true,
+            rotatable: true,
+            zoomOnWheel: false,
+            autoCropArea: 0.8,
+            cropend: function() {
+                var data = $(this).cropper('getData', true);
+                saveCoords(data);
+            },
+            zoom: function() {
+                var data = $(this).cropper('getData', true);
+                saveCoords(data);
+            },
+            data: {
+                height: parseInt('{{ current.height }}'),
+                rotate: parseInt('{{ current.rotate }}'),
+                width: parseInt('{{ current.width }}'),
+                x: parseInt('{{ current.x }}'),
+                y: parseInt('{{ current.y }}')
+            }
+        });
+        $('#cropperZoomOut').on('click', function (e) {
+            e.preventDefault();
+            $image.cropper('zoom', -0.1);
+            var data = $image.cropper('getData', true);
+            saveCoords(data);
+        });
+        $('#cropperZoomIn').on('click', function (e) {
+            e.preventDefault();
+            $image.cropper('zoom', 0.1);
+            var data = $image.cropper('getData', true);
+            saveCoords(data);
+        });
+        $("#cropperRotateLeft").on('click', function (e) {
+            e.preventDefault();
+            $image.cropper("rotate", -90);
+            var data = $image.cropper('getData', true);
+            saveCoords(data);
+        });
+        $("#cropperRotateRight").on('click', function (e) {
+            e.preventDefault();
+            $image.cropper("rotate", 90);
+            var data = $image.cropper('getData', true);
+            saveCoords(data);
+        });
+
+        $("#saveCrop").on('click', function (e) {
+            e.preventDefault();
+            $('.popup-overlay .cancel').addClass('disabled');
+            var cropForm = $("#fileSaveForm");
+            var validForm = true;
+            cropForm.find('input').each(function () {
+                if ($(this).val().length < 1){
+                    validForm = false;
+                }
+            });
+
+            if (validForm){
+                $("#cropperLoader").show();
+                $.ajax({
+                    type: 'POST', url: '{{ System.url('photos/backend/save') }}', data: cropForm.serialize(), 'dataType': 'json', success: function (response) {
+                        if (response.success) {
+                            var revision = getRandomInt(2, 1000);
+                            var src = response.image + '?v=' + revision;
+                            var croppedImg = $("<img>").attr('src', src);
+                            $("#{{ container }}").find('img').remove();
+                            $("#{{ container }}").wait(10).prepend(croppedImg);
+                            croppedImg.load(function () {
+                                $('.popup-overlay .cancel').removeClass('disabled').wait(10).trigger('click');
+                            });
+                        } else {
+                            $("#cropperLoader").addClass('error');
+                            $('.popup-overlay .cancel').removeClass('disabled');
+                        }
+                    }
+                });
+            } else {
+                $('.popup-overlay .cancel').removeClass('disabled');
+                alert('Prosimy zaznaczyć obszar do wycięcia');
+            }
+        });
+    }
+
+    function saveCoords(c) {
+        $('#fileX').val(parseInt(c.x));
+        $('#fileY').val(parseInt(c.y));
+        $('#fileWidth').val(parseInt(c.width));
+        $('#fileHeight').val(parseInt(c.height));
+        $('#fileRotate').val(parseInt(c.rotate));
+    }
+
+    $(document).ready(function() {
+        $image = $("#uplImage");
+        if (isPhotoLoaded){
+            cropperCodeStart();
+        } else {
+            cropperInterval = setInterval(function () {
+                if (isPhotoLoaded){
+                    clearInterval(cropperInterval);
+                    cropperCodeStart();
+                }
+            }, 100);
+        }
+    });
+</script>

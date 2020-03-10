@@ -1,0 +1,12 @@
+<div id="HEADER">
+    <div class="logo"><a href="/gwadminpanel"><img src="/a/imgs/logo.png" alt="BlackCat - System zarządzania treścią" /></a></div>
+    {% if sbSettings %}
+        <a href="#" class="toggle-nav-menu material"><i class="fa {% if sbSettings.sbLeft %}fa-long-arrow-left{% else %}fa-bars{% endif %}"></i></a>
+    {% else %}
+        <a href="#" class="toggle-nav-menu material"><i class="fa fa-long-arrow-left"></i></a>
+    {% endif %}
+    <div class="right">
+        <a href="#" class="user-info"><p>WITAJ, <strong>{{ userData.name }}</strong>!</p> <span><img src="{{ userData.photo }}" alt="" /><i class="fa fa-circle-right-arrow"></i></span></a>
+    </div>
+    <div class="clr"></div>
+</div>

@@ -1,0 +1,68 @@
+{% extends 'base.twig' %}
+
+{% block title %}Użytkownicy{% endblock %}
+
+{% block content %}
+    <div class="tse-scrollable wrapper horizontal">
+        <div class="tse-content">
+            <div class="tiles-wrap {{ Convert.number_to_words(1) }}elements">
+                <span class="after">&nbsp;</span>
+                <div id="tiles" class="{{ Convert.number_to_words(1) }}elements">
+                    <a href="{{ System.url('users/backend/index')|raw }}" class="tile">
+                        <i class="fa fa-back"></i>
+                        <h4>Powrót</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-article">
+        {{ System.getMessages()|raw }}
+        {% set form = ActiveForm.begin({ 'id': 'addForm', 'options': {'enctype' : 'multipart/form-data'} }) %}
+            <div class="input">
+                {{ html.activeLabel(model, 'name')|raw }}
+                {{ html.activeTextInput(model, 'name', {'class' : ((errors.name) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'name', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input">
+                {{ html.activeLabel(model, 'surname')|raw }}
+                {{ html.activeTextInput(model, 'surname', {'class' : ((errors.surname) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'surname', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input">
+                {{ html.activeLabel(model, 'phone')|raw }}
+                {{ html.activeTextInput(model, 'phone', {'class' : ((errors.phone) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'phone', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input">
+                {{ html.activeLabel(model, 'mail')|raw }}
+                {{ html.activeTextInput(model, 'mail', {'class' : ((errors.mail) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'mail', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input">
+                {{ html.activeLabel(model, 'nip')|raw }}
+                {{ html.activeTextInput(model, 'nip', {'class' : ((errors.nip) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'nip', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input">
+                {{ html.activeLabel(model, 'password')|raw }}
+                {{ html.activePasswordInput(model, 'password', {'class' : ((errors.password) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'password', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input">
+                {{ html.activeLabel(model, 'rpassword')|raw }}
+                {{ html.activePasswordInput(model, 'rpassword', {'class' : ((errors.rpassword) ? 'error' : ' ')})|raw }}
+                {{ html.error(model, 'rpassword', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="input select{{ ((errors.role) ? ' error' : ' ') }}">
+                {{ html.activeLabel(model, 'role')|raw }}
+                {{ html.activeDropDownList(model, 'role', roleMapping, { 'prompt': 'Wybierz grupę uprawnień użytkownika', 'class': 'fancy-sel' })|raw }}
+                {{ html.error(model, 'role', {'class': 'field-error', 'tag': 'p'})|raw }}
+            </div>
+            <div class="button-wrap">
+                {{ html.submitButton('Zapisz', {'class' : 'button material'})|raw }}
+                <div class="clr"></div>
+            </div>
+        {% do ActiveForm.end() %}
+    </div>
+{% endblock %}

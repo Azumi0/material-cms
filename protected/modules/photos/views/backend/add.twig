@@ -1,0 +1,205 @@
+<div class="popup-wrapper">
+    <div class="popup-body cropper-wrap">
+        <div class="popup-head">
+            <div class="options-wrap">
+                <div class="options" id="cropperOpts">
+                    <a href="#" id="cropperZoomIn" class="disabled"><i class="fa fa-search-plus"></i></a>
+                    <a href="#" id="cropperZoomOut" class="disabled"><i class="fa fa-search-minus"></i></a>
+                    <a href="#" id="cropperRotateLeft" class="disabled"><i class="fa fa-rotate-left"></i></a>
+                    <a href="#" id="cropperRotateRight" class="disabled"><i class="fa fa-rotate-right"></i></a>
+                    {#<a href="#" id="cropperMove" class="disabled"><i class="fa fa-arrows"></i></a>
+                    <a href="#" id="cropperCrop" class="disabled"><i class="fa fa-crop"></i></a>#}
+                    <div class="clr"></div>
+                </div>
+                <div class="save">
+                    <a href="#" id="saveCrop" class="button material">Zapisz</a>
+                    <a href="#" class="cancel"><i class="icomoon icon-close"></i></a>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <form id="fileSaveForm">
+            <input id="fileName" name="photo[name]" type="hidden" value="" />
+            <input id="fileCode" name="photo[code]" type="hidden" value="{{ dimensions.w|raw }}x{{ dimensions.h|raw }}" />
+            <input id="fileX" name="photo[x]" type="hidden" value="" />
+            <input id="fileY" name="photo[y]" type="hidden" value="" />
+            <input id="fileWidth" name="photo[width]" type="hidden" value="" />
+            <input id="fileHeight" name="photo[height]" type="hidden" value="" />
+            <input id="fileRotate" name="photo[rotate]" type="hidden" value="" />
+        </form>
+        <div class="popup-content">
+            <div class="loader" id="cropperLoader">
+                <div class="progress-container">
+                    <div class="dot first"></div>
+                    <div class="dot second"></div>
+                    <div class="dot third"></div>
+                    <div class="dot fourth"></div>
+                    <div class="dot fifth"></div>
+                    <div class="dot sixth"></div>
+                </div>
+                <div class="error form"><h4><i class="fa fa-error"></i> Błąd</h4> <p>Wystąpił błąd podczas wysyłania pliku. Proszę sprawdzić czy nie przerwane zostało połączenie sieciowe.</p></div>
+            </div>
+            <div class="uploader-wrapper" id="uplWrap">
+                <div id="photoUpload">Wgraj</div>
+            </div>
+            <div class="cropper-wrapper" id="cropWrap">
+                <div id="cropper"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# scripts below #}
+<script type="text/javascript" src="/a/js/cropper.js"></script>
+<script type="text/javascript">
+    var dimH = '{{ dimensions.h|raw }}';
+    var dimW = '{{ dimensions.w|raw }}';
+    var aspectH = '{{ aspect.h|raw }}';
+    var aspectW = '{{ aspect.w|raw }}';
+
+    function saveCoords(c) {
+        $('#fileX').val(parseInt(c.x));
+        $('#fileY').val(parseInt(c.y));
+        $('#fileWidth').val(parseInt(c.width));
+        $('#fileHeight').val(parseInt(c.height));
+        $('#fileRotate').val(parseInt(c.rotate));
+    }
+
+    $(document).ready(function() {
+        var settings = {
+            url: "{{ System.url('photos/backend/upload') }}",
+            formData: {"_csrf":csrf},
+            dragDrop:true,
+            multiple:false,
+            maxFileSize: upload_max_filesize,
+            showFileCounter: false,
+            maxFileCount:1,
+            acceptFiles:"image/*",
+            fileName: "myfile",
+            returnType:"json",
+            onSubmit: function () {
+                $("#cropperLoader").show();
+            },
+            onSuccess:function(files,data,xhr)
+            {
+                $("#fileName").val(data[0].name);
+                $("#cropper").append('<img src="{{ System.url('photos/backend/display') }}?file=' + data[0].urld + '" rel="" alt="" id="uplImage" />');
+                var $image = $("#uplImage");
+                $image.load(function() {
+                    $("#cropperOpts a").removeClass('disabled');
+                    $("#cropperLoader").hide();
+                    $("#uplWrap").hide();
+                    $("#cropWrap").show();
+                    $image.cropper({
+                        aspectRatio: aspectW / aspectH,
+                        dragCrop: false,
+                        doubleClickToggle: false,
+                        strict: true,
+                        rotatable: true,
+                        zoomOnWheel: false,
+                        autoCropArea: 0.8,
+                        cropend: function() {
+                            var data = $(this).cropper('getData', true);
+                            saveCoords(data);
+                        },
+                        zoom: function() {
+                            var data = $(this).cropper('getData', true);
+                            saveCoords(data);
+                        },
+                        built: function () {
+                            $(this).cropper('zoom', 0.5);
+                        }
+                    });
+                    $('#cropperZoomOut').on('click', function (e) {
+                        e.preventDefault();
+                        $image.cropper('zoom', -0.1);
+                        var data = $image.cropper('getData', true);
+                        saveCoords(data);
+                    });
+                    $('#cropperZoomIn').on('click', function (e) {
+                        e.preventDefault();
+                        $image.cropper('zoom', 0.1);
+                        var data = $image.cropper('getData', true);
+                        saveCoords(data);
+                    });
+                    $("#cropperRotateLeft").on('click', function (e) {
+                        e.preventDefault();
+                        $image.cropper("rotate", -90);
+                        var data = $image.cropper('getData', true);
+                        saveCoords(data);
+                    });
+                    $("#cropperRotateRight").on('click', function (e) {
+                        e.preventDefault();
+                        $image.cropper("rotate", 90);
+                        var data = $image.cropper('getData', true);
+                        saveCoords(data);
+                    });
+
+                    setTimeout(function () {
+                        var data = $image.cropper('getData', true);
+                        saveCoords(data);
+                    }, 50);
+
+                    $("#saveCrop").on('click', function (e) {
+                        e.preventDefault();
+                        $('.popup-overlay .cancel').addClass('disabled');
+                        var cropForm = $("#fileSaveForm");
+                        var validForm = true;
+                        cropForm.find('input').each(function () {
+                            if ($(this).val().length < 1){
+                                validForm = false;
+                            }
+                        });
+
+                        if (validForm){
+                            $("#cropperLoader").show();
+                            $.ajax({
+                                type: 'POST', url: '{{ System.url('photos/backend/save') }}', data: cropForm.serialize(), 'dataType': 'json', success: function (response) {
+                                    if (response.success) {
+                                        var revision = getRandomInt(2, 1000);
+                                        var filename = $("#fileName").val();
+                                        $('input[name="{{ fieldname }}"]').val(filename);
+                                        $("#{{ button }}").hide();
+                                        var src = response.image + '?v=' + revision;
+                                        var croppedImg = $("<img>").attr('src', src);
+                                        var editPhoto = '<a href="{{ System.url('photos/backend/edit')|raw }}" data-params="' + filename + '|{{ encodedDim }}|{{ container }}" class="selectPhotoAjax button material edit">Edytuj zdjęcie</a><div class="clr"></div>';
+                                        var deletePhoto = '<a href="#" data-fieldname="{{ fieldname }}" data-container="{{ container }}" data-button="{{ button }}" class="clearPhoto button material delete">Usuń zdjęcie</a><div class="clr"></div>';
+                                        $("#{{ container }}").show().append(croppedImg).append(editPhoto + deletePhoto);
+                                        croppedImg.load(function () {
+                                            $('.popup-overlay .cancel').removeClass('disabled').wait(10).trigger('click');
+                                        });
+                                    } else {
+                                        $("#cropperLoader").addClass('error');
+                                        $('.popup-overlay .cancel').removeClass('disabled');
+                                    }
+                                }
+                            });
+                        } else {
+                            $('.popup-overlay .cancel').removeClass('disabled');
+                            alert('Prosimy zaznaczyć obszar do wycięcia');
+                        }
+                    });
+                });
+            },
+            onError:function (files, status, message, pd) {
+                $("#cropperLoader").hide();
+                pd.statusbar.hide();
+                shalert(message);
+            },
+            showDelete:false,
+            showDone:false,
+            dragDropStr: "<span>Przeciągnij plik</span><div class='clr'></div>",
+            abortStr:"porzuć",
+            cancelStr:"anuluj",
+            doneStr:"ukończone",
+            multiDragErrorStr: "Błąd podczas przeciągania pliku.",
+            extErrorStr:"Złe rozszerzenie pliku. Dopuszczalne pliki to:",
+            sizeErrorStr:"Za duży rozmiar pliku. Maksymalny rozmiar to: ",
+            uploadErrorStr:"Błąd wgrywania pliku",
+            uploadStr:"WGRAJ"
+        };
+        var uploadObj = $("#photoUpload").uploadFile(settings);
+
+
+    });
+</script>

@@ -1,0 +1,111 @@
+{% extends 'base.twig' %}
+
+{% block title %}Uprawnienia{% endblock %}
+
+{% block content %}
+    <div class="tse-scrollable wrapper horizontal">
+        <div class="tse-content" id="tiles-movable-content">
+            {% if Stat.getPerms('admins|backend|index') %}
+                <div class="tiles-wrap with-stats {{ Convert.number_to_words(3) }}elements">
+                    <span class="after">&nbsp;</span>
+                    <div id="tiles" class="{{ Convert.number_to_words(1) }}elements">
+                        <a href="{{ System.url('acl/backend/add')|raw }}" class="tile">
+                            <i class="fa fa-plus"></i>
+                            <h4>Dodaj rolę</h4>
+                        </a>
+                    </div>
+                    <div id="tiles-stats" class="links-override {{ Convert.number_to_words(2) }}elements">
+                        <a href="{{ System.url('admins/backend/index')|raw }}" class="tile">
+                            <i class="fa fa-users"></i>
+                            <h4>Administratorzy</h4>
+                        </a>
+                        <a href="{{ System.url('acl/backend/index')|raw }}" class="tile active">
+                            <i class="icomoon icon-business"></i>
+                            <h4>Role administratorów</h4>
+                        </a>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            {% else %}
+                <div class="tiles-wrap {{ Convert.number_to_words(1) }}elements">
+                    <span class="after">&nbsp;</span>
+                    <div id="tiles" class="{{ Convert.number_to_words(1) }}elements">
+                        <a href="{{ System.url('acl/backend/add')|raw }}" class="tile">
+                            <i class="fa fa-plus"></i>
+                            <h4>Dodaj rolę</h4>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="tile-arrows-wrap">
+        {% if Stat.getPerms('acl|backend|index') %}
+            <div class="responsive-tile-arrows {{ Convert.number_to_words(3) }}elements">
+                <a href="#" id="tilesMoveLeft" class="fa fa-long-arrow-left"></a>
+                <a href="#" id="tilesMoveRight" class="fa fa-long-arrow-right"></a>
+            </div>
+        {% endif %}
+    </div>
+    <div class="listing">
+        {{ System.getMessages()|raw }}
+        <div class="materialtable-sh-wrap">
+            <table id="main-listing" class="materialtable">
+                <thead>
+                    <tr>
+                        <th>LP</th>
+                        <th class="textL">Nazwa</th>
+                        <th data-hide="800">Opcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if roles %}
+                        {% for r in roles %}
+                            <tr class="{% if loop.index % 2 == 0 %}even {% endif %}materialtable-row">
+                                <td class="textC">{{ loop.index }}</td>
+                                <td><h5 class="name">{{ r.description }}</h5></td>
+                                <td class="textC options">
+                                    <a href="#" class="options-trigger fa fa-cog"></a>
+                                    <div class="more-options">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ System.url('acl/backend/edit', { 'name': r.name })|raw }}" class="edit button material"><i class="icomoon icon-pencil"></i></a></a>
+                                                    <a href="{{ System.url('acl/backend/delete', { 'name': r.name })|raw }}" onclick="return confirm('Czy na pewno usunąć?');" class="delete button material"><i class="icomoon icon-bin"></i></a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="display: none;" class="materialtable-row-ext">
+                                <td colspan="3">
+                                    <div class="bottom-content">
+                                        <div class="title full">Opcje:</div>
+                                        <a href="{{ System.url('acl/backend/edit', { 'name': r.name })|raw }}" class="edit button material"><i class="icomoon icon-pencil"></i></a></a>
+                                        <a href="{{ System.url('acl/backend/delete', { 'name': r.name })|raw }}" onclick="return confirm('Czy na pewno usunąć?');" class="delete button material"><i class="icomoon icon-bin"></i></a>
+                                        <div class="clr"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr style="display: none;" class="materialtable-no-records">
+                            <td colspan="5">Brak wyników do wyświetlenia</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headscript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#main-listing').materialtable2({
+                href: false
+            });
+        });
+    </script>
+{% endblock %}

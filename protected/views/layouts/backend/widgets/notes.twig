@@ -1,0 +1,10 @@
+<div class="widget-inner notes widget-notes" rel="widget-notes">
+    {% if widgetsEditMode %}
+        <h2 class="widget-handle">NOTATKI <a href="#" class="delete-widget"><i class="fa fa-times"></i></a></h2>
+    {% else %}
+        <h2>NOTATKI</h2>
+    {% endif %}
+    <form>
+        <textarea class="notes-widget-txt">{{ System.getNotepadWidget()|raw }}</textarea>
+    </form>
+</div>

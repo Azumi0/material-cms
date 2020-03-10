@@ -1,0 +1,161 @@
+{% set sbSettings = System.userSidebars() %}
+<!DOCTYPE html>
+<!--[if lt IE 9]>			<html dir="ltr" lang="pl" class="no-js ie8 lt-ie10 lt-ie9">		<![endif]-->
+<!--[if IE 9]>				<html dir="ltr" lang="pl" class="no-js ie9 lt-ie10">			<![endif]-->
+<!--[if gt IE 9]><!-->		<html dir="ltr" lang="pl" class="no-js">					<!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <title>MaterialCMS</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/a/fonts/fonts.css">
+        <link rel="stylesheet" type="text/css" href="/a/css/default_skin.css">
+        <link rel="stylesheet" type="text/css" href="/a/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/a/css/trackpad-scroll-emulator.css">
+        <link rel="stylesheet" type="text/css" href="/a/css/fancySelect.css">
+        <link rel="stylesheet" type="text/css" href="/a/css/uploadfile.css" />
+        <link rel="stylesheet" type="text/css" href="/a/css/cropper.css" />
+        <link rel="stylesheet" type="text/css" href="/a/css/select2.min.css" />
+        <link rel="stylesheet" type="text/css" href="/a/css/jquery.tag-editor.css" />
+
+        <link href="/a/css/mobiscroll/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.icons.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.frame.wp.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.scroller.wp.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.image.css" rel="stylesheet" type="text/css" />
+        <link href="/a/css/mobiscroll/mobiscroll.wp-light.css" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" type="text/css" href="/a/css/style.css">
+
+        <link rel="shortcut icon" type="image/x-icon" href="/a/imgs/favicon.ico">
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="/a/js/html5shiv.js"></script>
+        <script type="text/javascript" src="/a/js/excanvas.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="/a/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/a/js/system.js"></script>
+        <script type="text/javascript" src="/a/js/jquery.form.js"></script>
+        <script type="text/javascript" src="/a/js/jquery.uploadfile.min.js"></script>
+
+        {% block abovescript %}{% endblock %}
+
+        <script type="text/javascript" src="/a/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/a/js/media.match.js"></script>
+        <script type="text/javascript" src="/a/js/coolclock.js"></script>
+        <script type="text/javascript" src="/a/js/moreskins.js"></script>
+        <script type="text/javascript" src="/a/js/enquire.min.js"></script>
+        <script type="text/javascript" src="/a/js/jquery.trackpad-scroll-emulator.min.js"></script>
+        <script type="text/javascript" src="/a/js/jquery.fn.sortable.min.js"></script>
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="/a/js/respond.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="/a/js/fancySelect.js"></script>
+        <script type="text/javascript" src="/a/js/jquery.wait.js"></script>
+        <script type="text/javascript" src="/a/js/tageditor/jquery.caret.min.js"></script>
+        <script type="text/javascript" src="/a/js/tageditor/jquery.tag-editor.js"></script>
+        <script type="text/javascript" src="/a/js/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript" src="/a/js/tinymce/jquery.tinymce.min.js"></script>
+        <script type="text/javascript" src="/a/js/tinymce/langs/pl.js"></script>
+
+        <script type="text/javascript">
+            var sbUrl = '{{ System.url('backend/sidebar')|raw }}';
+            {% if sbSettings %}
+                var sbLeft = {{ sbSettings.sbLeft }};
+                {#var sbRight = {{ sbSettings.sbRight }};#}
+            {% else %}
+                var sbLeft = 1;
+            {% endif %}
+            var sbRight = 0;
+            var csrf = '{{ System.getCsrfToken() }}';
+            var upload_max_filesize = {{ System.file_upload_max_size() }};
+        </script>
+
+        <script src="/a/js/mobiscroll/mobiscroll.core.js"></script>
+        <script src="/a/js/mobiscroll/mobiscroll.frame.js"></script>
+        <script src="/a/js/mobiscroll/mobiscroll.scroller.js"></script>
+
+        <script src="/a/js/mobiscroll/mobiscroll.util.datetime.js"></script>
+        <script src="/a/js/mobiscroll/mobiscroll.datetimebase.js"></script>
+        <script src="/a/js/mobiscroll/mobiscroll.datetime.js"></script>
+
+        <script src="/a/js/mobiscroll/mobiscroll.frame.wp.js"></script>
+        <script src="/a/js/mobiscroll/mobiscroll.wp-light.js"></script>
+
+        <script src="/a/js/mobiscroll/i18n/mobiscroll.i18n.en-UK.js"></script>
+        <script src="/a/js/mobiscroll/i18n/mobiscroll.i18n.pl.js"></script>
+
+        <script type="text/javascript" src="/a/js/select2.min.js"></script>
+        <script type="text/javascript" src="/a/js/select2.pl.js"></script>
+
+        <script type="text/javascript" src="/a/js/materialtable2.js"></script>
+        <script type="text/javascript" src="/a/js/functions.js"></script>
+
+        {% block headscript %}{% endblock %}
+    </head>
+    <body{% if bodyclass %} class="{{ bodyclass }}"{% endif %}>
+        <div class="overall">
+            {% set userData = System.adminData() %}
+            {% if not rawPage %}
+                {% if sbSettings %}
+                    <div id="page" class="{% if sbSettings.sbLeft %}active-left{% endif %}">
+                {% else %}
+                    <div id="page" class="active-left">
+                {% endif %}
+                    <div id="CONTENT"{% if userData.banner %} class="minimized"{% endif %}>
+                        {% include 'header.twig' %}
+                        {% include 'menu.twig' %}
+                        <div class="main-wrap">
+                            <div id="MAIN" class="height-equalizer allWidgetsCnt">
+                                <div class="top-background">
+                                    <div class="background-inner"></div>
+                                    <h1>{% block title %}{% endblock %}</h1>
+                                </div>
+            {% else %}
+                <div id="page" class="{% if not iAmAnError %}active-left active-right{% endif %}">
+            {% endif %}
+                    {% if iAmAnError %}
+                    <div id="CONTENT">
+                        <div class="main-wrap">
+                            <div id="MAIN" class="height-equalizer allWidgetsCnt">
+                                <div class="top-background">
+                                    <div class="background-inner"></div>
+                                    <h1>{{ html.encode(name)|raw }}</h1>
+                                </div>
+                    {% endif %}
+                {% block content %}{% endblock %}
+                                {% if iAmAnError %}
+                                    </div>
+                                    </div>
+                                    </div>
+                                {% endif %}
+            {% if not rawPage %}
+                    </div>
+                    </div>
+                    {% include 'sidebar_settings.twig' %}
+                    <div class="clr"></div>
+                </div>
+                        <div class="clr"></div>
+                    </div>
+                    {% include 'footer.twig' %}
+            {% else %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="sloader" id="wholePagePreLoader" style="display: none">
+            <div class="progress-container">
+                <div class="dot first"></div>
+                <div class="dot second"></div>
+                <div class="dot third"></div>
+                <div class="dot fourth"></div>
+                <div class="dot fifth"></div>
+                <div class="dot sixth"></div>
+            </div>
+        </div>
+        {% block inlinescript %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,78 @@
+{% for r in listing %}
+    <tr class="{% if loop.index % 2 == 0 %}even {% endif %}materialtable-row">
+        <td class="textC">{{ (loop.index + offset) }}</td>
+        <td><h5 class="name">{{ r.name|raw }}</h5></td>
+        <td><h5 class="name">{{ r.surname|raw }}</h5></td>
+        <td class="textC">
+            {{ r.mail }}
+        </td>
+        <td class="textC">
+            {{ r.company_province }}
+        </td>
+        <td class="textC">
+            {{ r.company_city }}
+        </td>
+        <td class="textC">
+            {{ roleMapping[r.role] }}
+        </td>
+        <td class="textC">
+            <a href="{{ System.url('users/backend/active', { 'id': r.id })|raw }}" class="activate">
+                    <i class="{% if r.active %}fa fa-check{% else %}icomoon icon-close{% endif %}"></i>
+            </a>
+        </td>
+        <td class="textC options">
+            <a href="#" class="options-trigger fa fa-cog"></a>
+            <div class="more-options">
+                <table>
+                    <tr>
+                        <td>
+                            <a href="{{ System.url('users/backend/details', { 'id': r.id })|raw }}"
+                               class="details button material">
+                                <i class="icomoon icon-details"></i>
+                            </a>
+                            <a href="{{ System.url('users/backend/edit', { 'id': r.id })|raw }}"
+                               class="edit button material"><img src="/a/imgs/pen.png" alt=""/></a>
+                            <a href="{{ System.url('users/backend/delete', { 'id': r.id })|raw }}"
+                               onclick="return confirm('Czy na pewno usunąć?');" class="delete button material"><i
+                                        class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="display: none;" class="materialtable-row-ext">
+        <td colspan="5">
+            <div class="bottom-content">
+                <div class="title">Województwo:</div>
+                <div class="info">{{ r.company_province }}</div>
+                <div class="clr"></div>
+                <div class="title">Miasto:</div>
+                <div class="info">{{ r.company_city }}</div>
+                <div class="clr"></div>
+                <div class="title">Adres e-mail:</div>
+                <div class="info">{{ r.mail }}</div>
+                <div class="clr"></div>
+                <div class="title">Rola:</div>
+                <div class="info">{{ roleMapping[r.role] }}</div>
+                <div class="clr"></div>
+                <div class="title">Aktywny:</div>
+                <div class="info">
+                    <a href="{{ System.url('users/backend/active', { 'id': r.id })|raw }}"
+                       class="activate">
+                            <i class="{% if r.active %}fa fa-check{% else %}icomoon icon-close{% endif %}"></i>
+                    </a>
+                    <div class="clr"></div>
+                </div>
+                <div class="title full">Opcje:</div>
+                <div class="info full">
+                    <a href="{{ System.url('users/backend/edit', { 'id': r.id })|raw }}"
+                       class="edit button material">EDYTUJ</a>
+                    <a href="{{ System.url('users/backend/delete', { 'id': r.id })|raw }}"
+                       onclick="return confirm('Czy na pewno usunąć?');" class="delete button material">USUŃ</a>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </td>
+    </tr>
+{% endfor %}

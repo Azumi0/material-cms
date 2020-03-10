@@ -1,0 +1,11 @@
+{% extends 'base.twig' %}
+
+{% block title %}BŁĄD 403{% endblock %}
+
+{% block content %}
+    <div id="error-cnt">
+        <h4>Nie masz uprawnień do tego modułu.</h4>
+        <p>Powrót na stronę główną.</p>
+        <a href="{{ System.url('backend/index')|raw }}" class="button material">POWRÓT</a>
+    </div>
+{% endblock %}

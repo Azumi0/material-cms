@@ -1,0 +1,10 @@
+.idea
+protected/runtime/cache/*
+protected/runtime/logs/*
+protected/runtime/materialhelpers/*
+protected/runtime/Twig/cache/*
+public/i/*
+public/assets/*
+uploads/*
+public/node_modules
+public/dist
